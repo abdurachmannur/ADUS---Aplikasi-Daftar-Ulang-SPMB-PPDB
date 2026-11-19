@@ -446,7 +446,7 @@ function seedInitialData(): void {
       DEFAULT_PERNYATAAN_PDB_ISI,
       'Pernyataan ini saya buat dengan sebenar-benarnya dan penuh tanggung jawab serta diketahui orang tua/wali Peserta didik',
       'Cihaurbeuti, 13 Juli 2026',
-      'Materai Rp.10.000'
+      'Materai Rp 10.000'
     );
   }
 

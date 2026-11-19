@@ -952,27 +952,17 @@ export function streamSuratPernyataanPdbPdf(
   doc.font('Helvetica').text(settings.pernyataan_pdb_titimangsa, rightColX, y, { width: colW });
   doc.font('Helvetica-Bold').text('Yang Membuat Pernyataan,', rightColX, y + 13, { width: colW });
 
-  // Clean subtle dashed Materai box
-  if (settings.pernyataan_pdb_materai) {
-    const boxX = rightColX + 6;
-    const boxY = y + 32;
-    const boxW = 94;
-    const boxH = 34;
-    doc
-      .save()
-      .lineWidth(0.6)
-      .dash(2.5, { space: 2 })
-      .strokeColor('#94A3B8')
-      .rect(boxX, boxY, boxW, boxH)
-      .stroke()
-      .undash()
-      .restore();
+  // Plain Materai label centered horizontally on the page (no border box, leaving right signature area clear)
+  if (settings.pernyataan_pdb_materai && settings.pernyataan_pdb_materai.trim()) {
+    const materaiW = 104;
+    const materaiX = (doc.page.width - materaiW) / 2;
+    const materaiY = y + 46;
     doc
       .font('Helvetica-Oblique')
-      .fontSize(8)
+      .fontSize(8.2)
       .fillColor(SLATE_MUTED)
-      .text(settings.pernyataan_pdb_materai, boxX + 4, boxY + 12, {
-        width: boxW - 8,
+      .text(settings.pernyataan_pdb_materai.trim(), materaiX, materaiY, {
+        width: materaiW,
         align: 'center',
       });
   }
