@@ -1,0 +1,16 @@
+node_modules
+dist
+data
+uploads
+backups
+*.db
+*.db-wal
+*.db-shm
+bun.lock
+.git
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+public/assets/aistudio

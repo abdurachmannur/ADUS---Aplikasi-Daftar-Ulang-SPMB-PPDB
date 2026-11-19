@@ -1,0 +1,27 @@
+services:
+  spmb-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spmb-pengumuman
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      TZ: Asia/Jakarta
+      JWT_SECRET: ${JWT_SECRET:-ganti-dengan-kode-rahasia-panjang-acak-untuk-produksi}
+      SQLITE_DB_PATH: /app/data/spmb.db
+      UPLOADS_DIR: /app/uploads
+    volumes:
+      # Volume persisten: database SQLite & file upload (logo, cap, TTD, lampiran PDF)
+      # tetap tersimpan aman meskipun container di-stop, restart, atau di-recreate.
+      - spmb_data:/app/data
+      - spmb_uploads:/app/uploads
+
+volumes:
+  spmb_data:
+    name: spmb_persistent_data
+  spmb_uploads:
+    name: spmb_persistent_uploads

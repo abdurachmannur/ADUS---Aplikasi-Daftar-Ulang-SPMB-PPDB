@@ -1,0 +1,8 @@
+{
+  "name": "SPMB SMA Negeri 1 Cihaurbeuti",
+  "description": "Sistem Informasi Pengumuman Seleksi SPMB dan Formulir Daftar Ulang SMA Negeri 1 Cihaurbeuti.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
