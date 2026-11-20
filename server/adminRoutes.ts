@@ -422,7 +422,31 @@ adminRouter.get('/letter-settings', (_req, res) => {
   const settings = db.prepare('SELECT * FROM letter_settings WHERE id = 1').get();
   res.json({ settings });
 });
+adminRouter.get('/letter-settings/asset/:type', (req, res) => {
+  const type = req.params.type === 'cap' ? 'cap_path' : req.params.type === 'ttd' ? 'ttd_path' : null;
+  if (!type) {
+    res.status(400).json({ error: 'Jenis aset tidak valid.' });
+    return;
+  }
 
+  const row = db.prepare(`SELECT ${type} as asset_path FROM letter_settings WHERE id = 1`).get() as
+    | { asset_path?: string }
+    | undefined;
+
+  if (!row?.asset_path || !row.asset_path.startsWith('/uploads/')) {
+    res.status(404).end();
+    return;
+  }
+
+  const rel = row.asset_path.replace(/^\/uploads\//, '');
+  const fullPath = path.resolve(UPLOADS_DIR, rel);
+  if (!fullPath.startsWith(UPLOADS_DIR) || !fs.existsSync(fullPath)) {
+    res.status(404).end();
+    return;
+  }
+
+  res.sendFile(fullPath);
+});
 adminRouter.put(
   '/letter-settings',
   stampUpload.fields([
