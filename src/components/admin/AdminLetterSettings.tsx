@@ -427,9 +427,17 @@ export function AdminLetterSettings() {
   const inputClass =
     'w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm text-slate-900 focus:border-[#1677FF] focus:outline-none focus:ring-2 focus:ring-[#1677FF]/15';
 
-  const currentCapSrc = capPreview || (removeCap ? '' : form.cap_path);
-  const currentTtdSrc = ttdPreview || (removeTtd ? '' : form.ttd_path);
-
+  const adminToken = getAdminToken();
+  const currentCapSrc =
+    capPreview ||
+    (removeCap || !form.cap_path
+      ? ''
+      : `/api/admin/letter-settings/asset/cap?token=${encodeURIComponent(adminToken || '')}&v=${encodeURIComponent(form.cap_path)}`);
+  const currentTtdSrc =
+    ttdPreview ||
+    (removeTtd || !form.ttd_path
+      ? ''
+      : `/api/admin/letter-settings/asset/ttd?token=${encodeURIComponent(adminToken || '')}&v=${encodeURIComponent(form.ttd_path)}`);
   return (
     <form onSubmit={handleSave} className="space-y-5">
       {error && (
