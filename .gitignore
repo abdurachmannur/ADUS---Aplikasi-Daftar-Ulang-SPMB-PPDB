@@ -6,3 +6,12 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Database, backup & unggahan lokal (jangan ikut ter-commit)
+data/
+uploads/
+backups/
+*.db
+*.db-wal
+*.db-shm
+bun.lock
