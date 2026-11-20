@@ -19,6 +19,16 @@ async function startServer(): Promise<void> {
   app.use(express.urlencoded({ extended: true }));
 
   // Serve uploaded logos, letterheads, and documents
+  // Blokir akses publik langsung ke gambar Cap Sekolah & TTD Kepala Sekolah
+  app.use('/uploads/images', (req, res, next) => {
+    if (/^\/(cap_sekolah|ttd_kepsek)-/i.test(req.path)) {
+      res.status(403).json({ error: 'Akses ditolak.' });
+      return;
+    }
+    next();
+  });
+
+  // Serve uploaded logos, letterheads, and documents
   app.use('/uploads', express.static(UPLOADS_DIR));
 
   // Health check endpoint for Docker & production monitoring
